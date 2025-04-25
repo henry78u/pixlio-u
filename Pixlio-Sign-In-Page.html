@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixlio - Sign In</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>tailwind.config={theme:{extend:{colors:{primary:'#4A6BFF',secondary:'#8A2BE2'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <style>
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #4A6BFF 0%, #8A2BE2 100%);
+        }
+    </style>
+</head>
+<body class="bg-white min-h-screen">
+    <div class="max-w-[375px] mx-auto relative min-h-screen pb-8">
+        <!-- Header -->
+        <header class="pt-6 px-5 flex items-center justify-center relative">
+            <a href="https://readdy.ai/home/2d8cbb53-b992-497d-a589-6de50818be1b/5dee7e83-6ede-4ca4-8b3a-ddde67d0c68d" data-readdy="true" class="absolute left-5 w-10 h-10 flex items-center justify-center cursor-pointer">
+                <i class="ri-arrow-left-line ri-lg text-gray-700"></i>
+            </a>
+            <h1 class="font-['Pacifico'] text-3xl text-primary">Pixlio</h1>
+        </header>
+
+        <main class="px-6 pt-10">
+            <!-- Welcome Text -->
+            <div class="text-center mb-10">
+                <h2 class="text-2xl font-semibold text-gray-900">Welcome Back</h2>
+                <p class="text-gray-500 mt-2">Sign in to continue exploring amazing images</p>
+            </div>
+
+            <!-- Sign In Form -->
+            <form id="signInForm" class="space-y-5">
+                <!-- Email Field -->
+                <div class="space-y-2">
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <div class="relative">
+                        <input 
+                            type="email" 
+                            id="email" 
+                            class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                            placeholder="Enter your email"
+                            required
+                        >
+                        <div class="absolute right-3 top-1/2 transform -translate-y-1/2 w-6 h-6 flex items-center justify-center">
+                            <i class="ri-mail-line text-gray-400"></i>
+                        </div>
+                    </div>
+                    <p id="emailError" class="text-red-500 text-xs hidden">Please enter a valid email address</p>
+                </div>
+
+                <!-- Password Field -->
+                <div class="space-y-2">
+                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <div class="relative">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                            placeholder="Enter your password"
+                            required
+                            minlength="6"
+                        >
+                        <div id="togglePassword" class="absolute right-3 top-1/2 transform -translate-y-1/2 w-6 h-6 flex items-center justify-center cursor-pointer">
+                            <i class="ri-eye-off-line text-gray-400"></i>
+                        </div>
+                    </div>
+                    <p id="passwordError" class="text-red-500 text-xs hidden">Password must be at least 6 characters</p>
+                </div>
+
+                <!-- Forgot Password Link -->
+                <div class="text-right">
+                    <a href="#" class="text-sm text-primary font-medium hover:text-secondary cursor-pointer">Forgot Password?</a>
+                </div>
+
+                <!-- Sign In Button -->
+                <button 
+                    type="submit" 
+                    class="w-full gradient-bg text-white py-3 font-medium !rounded-button flex items-center justify-center cursor-pointer"
+                >
+                    Sign In
+                </button>
+            </form>
+
+            <!-- Social Login -->
+            <div class="mt-8">
+                <div class="flex items-center justify-center">
+                    <div class="flex-grow h-px bg-gray-200"></div>
+                    <span class="px-4 text-sm text-gray-500">Or continue with</span>
+                    <div class="flex-grow h-px bg-gray-200"></div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-3 mt-5">
+                    <button class="flex items-center justify-center py-2.5 border border-gray-200 rounded-lg bg-white hover:bg-gray-50 cursor-pointer">
+                        <div class="w-6 h-6 flex items-center justify-center">
+                            <i class="ri-google-fill text-[#4285F4]"></i>
+                        </div>
+                    </button>
+                    <button class="flex items-center justify-center py-2.5 border border-gray-200 rounded-lg bg-white hover:bg-gray-50 cursor-pointer">
+                        <div class="w-6 h-6 flex items-center justify-center">
+                            <i class="ri-apple-fill text-[#000000]"></i>
+                        </div>
+                    </button>
+                    <button class="flex items-center justify-center py-2.5 border border-gray-200 rounded-lg bg-white hover:bg-gray-50 cursor-pointer">
+                        <div class="w-6 h-6 flex items-center justify-center">
+                            <i class="ri-facebook-fill text-[#1877F2]"></i>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Sign Up Link -->
+            <div class="mt-10 text-center">
+                <p class="text-gray-600">
+                    Don't have an account? 
+                    <a href="#" class="text-primary font-medium hover:text-secondary cursor-pointer">Sign Up</a>
+                </p>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('signInForm');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const emailError = document.getElementById('emailError');
+            const passwordError = document.getElementById('passwordError');
+            const togglePassword = document.getElementById('togglePassword');
+            
+            // Toggle password visibility
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                
+                // Toggle eye icon
+                const eyeIcon = togglePassword.querySelector('i');
+                if (type === 'password') {
+                    eyeIcon.classList.remove('ri-eye-line');
+                    eyeIcon.classList.add('ri-eye-off-line');
+                } else {
+                    eyeIcon.classList.remove('ri-eye-off-line');
+                    eyeIcon.classList.add('ri-eye-line');
+                }
+            });
+            
+            // Email validation
+            emailInput.addEventListener('blur', function() {
+                validateEmail();
+            });
+            
+            // Password validation
+            passwordInput.addEventListener('blur', function() {
+                validatePassword();
+            });
+            
+            function validateEmail() {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(emailInput.value) && emailInput.value !== '') {
+                    emailError.classList.remove('hidden');
+                    emailInput.classList.add('border-red-500');
+                    return false;
+                } else {
+                    emailError.classList.add('hidden');
+                    emailInput.classList.remove('border-red-500');
+                    return true;
+                }
+            }
+            
+            function validatePassword() {
+                if (passwordInput.value.length < 6 && passwordInput.value !== '') {
+                    passwordError.classList.remove('hidden');
+                    passwordInput.classList.add('border-red-500');
+                    return false;
+                } else {
+                    passwordError.classList.add('hidden');
+                    passwordInput.classList.remove('border-red-500');
+                    return true;
+                }
+            }
+            
+            // Form submission
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const isEmailValid = validateEmail();
+                const isPasswordValid = validatePassword();
+                
+                if (isEmailValid && isPasswordValid) {
+                    // Create success message
+                    const successMessage = document.createElement('div');
+                    successMessage.className = 'fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50';
+                    successMessage.innerHTML = `
+                        <div class="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+                            <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center rounded-full bg-green-100">
+                                <i class="ri-check-line ri-2x text-green-500"></i>
+                            </div>
+                            <h3 class="text-lg font-medium text-center text-gray-900 mb-2">Sign In Successful</h3>
+                            <p class="text-gray-600 text-center mb-6">You'll be redirected to the main app in a moment.</p>
+                            <div class="flex justify-center">
+                                <div class="w-full h-1 bg-gray-200 rounded-full overflow-hidden">
+                                    <div class="h-full bg-primary animate-[progress_2s_ease-in-out_forwards]"></div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    document.body.appendChild(successMessage);
+                    
+                    // Add animation for progress bar
+                    const style = document.createElement('style');
+                    style.textContent = `
+                        @keyframes progress {
+                            from { width: 0; }
+                            to { width: 100%; }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                    
+                    // Redirect after 2 seconds
+                    setTimeout(() => {
+                        window.location.href = "https://readdy.ai/home/2d8cbb53-b992-497d-a589-6de50818be1b/5dee7e83-6ede-4ca4-8b3a-ddde67d0c68d";
+                    }, 2000);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

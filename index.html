@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pixlio - Discover and Download Beautiful Images</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#4A6BFF',secondary:'#8A2BE2'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+body {
+font-family: 'Inter', sans-serif;
+max-width: 375px;
+margin: 0 auto;
+min-height: 100vh;
+position: relative;
+}
+.toast-notification {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+.gradient-text {
+background: linear-gradient(90deg, #4A6BFF 0%, #8A2BE2 100%);
+-webkit-background-clip: text;
+background-clip: text;
+color: transparent;
+}
+.gradient-bg {
+background: linear-gradient(90deg, #4A6BFF 0%, #8A2BE2 100%);
+}
+.category-item.active {
+background: linear-gradient(90deg, #4A6BFF 0%, #8A2BE2 100%);
+color: white;
+}
+.masonry-grid {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+grid-gap: 10px;
+}
+.masonry-grid > div:nth-child(odd) {
+grid-row: span 1;
+}
+.masonry-grid > div:nth-child(even) {
+grid-row: span 2;
+}
+.masonry-grid > div:nth-child(4n+1) {
+grid-row: span 2;
+}
+.masonry-grid > div:nth-child(4n) {
+grid-row: span 1;
+}
+</style>
+</head>
+<body class="bg-white">
+<!-- Onboarding Screen -->
+<div id="onboarding-screen" class="min-h-screen flex flex-col">
+<!-- Interest Selection -->
+<div class="px-5 pt-14 pb-20 flex flex-col flex-grow">
+<div class="text-center mb-8">
+<h1 class="font-['Pacifico'] text-3xl mb-2">Pixlio</h1>
+<p class="text-gray-600">Select your interests to personalize your feed</p>
+</div>
+<div class="grid grid-cols-3 gap-3 mb-8">
+<div class="category-item cursor-pointer flex flex-col items-center p-3 rounded-md border border-gray-200 hover:border-primary transition-all">
+<div class="w-12 h-12 flex items-center justify-center mb-2">
+<img src="https://readdy.ai/api/search-image?query=icon%2C%203D%20cartoon%2C%20Nature%20landscape%20with%20mountains%20and%20trees%2C%20the%20icon%20should%20take%20up%2070%25%20of%20the%20frame%2C%20vibrant%20colors%20with%20soft%20gradients%2C%20minimalist%20design%2C%20smooth%20rounded%20shapes%2C%20subtle%20shading%2C%20no%20outlines%2C%20centered%20composition%2C%20isolated%20on%20white%20background%2C%20playful%20and%20friendly%20aesthetic%2C%20isometric%20perspective%2C%20high%20detail%20quality%2C%20clean%20and%20modern%20look%2C%20single%20object%20focus&width=80&height=80&seq=1&orientation=squarish" alt="Nature" class="w-full h-full object-cover rounded-full">
+</div>
+<span class="text-xs whitespace-nowrap overflow-hidden text-overflow-ellipsis">Nature</span>
+</div>
+<div class="category-item active cursor-pointer flex flex-col items-center p-3 rounded-md border border-primary transition-all">
+<div class="w-12 h-12 flex items-center justify-center mb-2">
+<img src="https://readdy.ai/api/search-image?query=icon%2C%203D%20cartoon%2C%20Technology%20gadget%20or%20computer%2C%20the%20icon%20should%20take%20up%2070%25%20of%20the%20frame%2C%20vibrant%20colors%20with%20soft%20gradients%2C%20minimalist%20design%2C%20smooth%20rounded%20shapes%2C%20subtle%20shading%2C%20no%20outlines%2C%20centered%20composition%2C%20isolated%20on%20white%20background%2C%20playful%20and%20friendly%20aesthetic%2C%20isometric%20perspective%2C%20high%20detail%20quality%2C%20clean%20and%20modern%20look%2C%20single%20object%20focus&width=80&height=80&seq=2&orientation=squarish" alt="Technology" class="w-full h-full object-cover rounded-full">
+</div>
+<span class="text-xs whitespace-nowrap overflow-hidden text-overflow-ellipsis">Technology</span>
+</div>
+<div class="category-item cursor-pointer flex flex-col items-center p-3 rounded-md border border-gray-200 hover:border-primary transition-all">
+<div class="w-12 h-12 flex items-center justify-center mb-2">
+<img src="https://readdy.ai/api/search-image?query=icon%2C%203D%20cartoon%2C%20Art%20supplies%20with%20paint%20brush%20and%20palette%2C%20the%20icon%20should%20take%20up%2070%25%20of%20the%20frame%2C%20vibrant%20colors%20with%20soft%20gradients%2C%20minimalist%20design%2C%20smooth%20rounded%20shapes%2C%20subtle%20shading%2C%20no%20outlines%2C%20centered%20composition%2C%20isolated%20on%20white%20background%2C%20playful%20and%20friendly%20aesthetic%2C%20isometric%20perspective%2C%20high%20detail%20quality%2C%20clean%20and%20modern%20look%2C%20single%20object%20focus&width=80&height=80&seq=3&orientation=squarish" alt="Art" class="w-full h-full object-cover rounded-full">
+</div>
+<span class="text-xs whitespace-nowrap overflow-hidden text-overflow-ellipsis">Art</span>
+</div>
+<div class="category-item cursor-pointer flex flex-col items-center p-3 rounded-md border border-gray-200 hover:border-primary transition-all">
+<div class="w-12 h-12 flex items-center justify-center mb-2">
+<img src="https://readdy.ai/api/search-image?query=icon%2C%203D%20cartoon%2C%20Travel%20with%20airplane%20or%20suitcase%2C%20the%20icon%20should%20take%20up%2070%25%20of%20the%20frame%2C%20vibrant%20colors%20with%20soft%20gradients%2C%20minimalist%20design%2C%20smooth%20rounded%20shapes%2C%20subtle%20shading%2C%20no%20outlines%2C%20centered%20composition%2C%20isolated%20on%20white%20background%2C%20playful%20and%20friendly%20aesthetic%2C%20isometric%20perspective%2C%20high%20detail%20quality%2C%20clean%20and%20modern%20look%2C%20single%20object%20focus&width=80&height=80&seq=4&orientation=squarish" alt="Travel" class="w-full h-full object-cover rounded-full">
+</div>
+<span class="text-xs whitespace-nowrap overflow-hidden text-overflow-ellipsis">Travel</span>
+</div>
+<div class="category-item active cursor-pointer flex flex-col items-center p-3 rounded-md border border-primary transition-all">
+<div class="w-12 h-12 flex items-center justify-center mb-2">
+<img src="https://readdy.ai/api/search-image?query=icon%2C%203D%20cartoon%2C%20Food%20dish%20or%20cuisine%2C%20the%20icon%20should%20take%20up%2070%25%20of%20the%20frame%2C%20vibrant%20colors%20with%20soft%20gradients%2C%20minimalist%20design%2C%20smooth%20rounded%20shapes%2C%20subtle%20shading%2C%20no%20outlines%2C%20centered%20composition%2C%20isolated%20on%20white%20background%2C%20playful%20and%20friendly%20aesthetic%2C%20isometric%20perspective%2C%20high%20detail%20quality%2C%20clean%20and%20modern%20look%2C%20single%20object%20focus&width=80&height=80&seq=5&orientation=squarish" alt="Food" class="w-full h-full object-cover rounded-full">
+</div>
+<span class="text-xs whitespace-nowrap overflow-hidden text-overflow-ellipsis">Food</span>
+</div>
+<div class="category-item cursor-pointer flex flex-col items-center p-3 rounded-md border border-gray-200 hover:border-primary transition-all">
+<div class="w-12 h-12 flex items-center justify-center mb-2">
+<img src="https://readdy.ai/api/search-image?query=icon%2C%203D%20cartoon%2C%20Architecture%20building%20or%20landmark%2C%20the%20icon%20should%20take%20up%2070%25%20of%20the%20frame%2C%20vibrant%20colors%20with%20soft%20gradients%2C%20minimalist%20design%2C%20smooth%20rounded%20shapes%2C%20subtle%20shading%2C%20no%20outlines%2C%20centered%20composition%2C%20isolated%20on%20white%20background%2C%20playful%20and%20friendly%20aesthetic%2C%20isometric%20perspective%2C%20high%20detail%20quality%2C%20clean%20and%20modern%20look%2C%20single%20object%20focus&width=80&height=80&seq=6&orientation=squarish" alt="Architecture" class="w-full h-full object-cover rounded-full">
+</div>
+<span class="text-xs whitespace-nowrap overflow-hidden text-overflow-ellipsis">Architecture</span>
+</div>
+<div class="category-item cursor-pointer flex flex-col items-center p-3 rounded-md border border-gray-200 hover:border-primary transition-all">
+<div class="w-12 h-12 flex items-center justify-center mb-2">
+<img src="https://readdy.ai/api/search-image?query=icon%2C%203D%20cartoon%2C%20Animal%20like%20cat%20or%20dog%2C%20the%20icon%20should%20take%20up%2070%25%20of%20the%20frame%2C%20vibrant%20colors%20with%20soft%20gradients%2C%20minimalist%20design%2C%20smooth%20rounded%20shapes%2C%20subtle%20shading%2C%20no%20outlines%2C%20centered%20composition%2C%20isolated%20on%20white%20background%2C%20playful%20and%20friendly%20aesthetic%2C%20isometric%20perspective%2C%20high%20detail%20quality%2C%20clean%20and%20modern%20look%2C%20single%20object%20focus&width=80&height=80&seq=7&orientation=squarish" alt="Animals" class="w-full h-full object-cover rounded-full">
+</div>
+<span class="text-xs whitespace-nowrap overflow-hidden text-overflow-ellipsis">Animals</span>
+</div>
+<div class="category-item active cursor-pointer flex flex-col items-center p-3 rounded-md border border-primary transition-all">
+<div class="w-12 h-12 flex items-center justify-center mb-2">
+<img src="https://readdy.ai/api/search-image?query=icon%2C%203D%20cartoon%2C%20Fashion%20clothing%20or%20accessories%2C%20the%20icon%20should%20take%20up%2070%25%20of%20the%20frame%2C%20vibrant%20colors%20with%20soft%20gradients%2C%20minimalist%20design%2C%20smooth%20rounded%20shapes%2C%20subtle%20shading%2C%20no%20outlines%2C%20centered%20composition%2C%20isolated%20on%20white%20background%2C%20playful%20and%20friendly%20aesthetic%2C%20isometric%20perspective%2C%20high%20detail%20quality%2C%20clean%20and%20modern%20look%2C%20single%20object%20focus&width=80&height=80&seq=8&orientation=squarish" alt="Fashion" class="w-full h-full object-cover rounded-full">
+</div>
+<span class="text-xs whitespace-nowrap overflow-hidden text-overflow-ellipsis">Fashion</span>
+</div>
+<div class="category-item cursor-pointer flex flex-col items-center p-3 rounded-md border border-gray-200 hover:border-primary transition-all">
+<div class="w-12 h-12 flex items-center justify-center mb-2">
+<img src="https://readdy.ai/api/search-image?query=icon%2C%203D%20cartoon%2C%20Sports%20equipment%20like%20basketball%20or%20tennis%20racket%2C%20the%20icon%20should%20take%20up%2070%25%20of%20the%20frame%2C%20vibrant%20colors%20with%20soft%20gradients%2C%20minimalist%20design%2C%20smooth%20rounded%20shapes%2C%20subtle%20shading%2C%20no%20outlines%2C%20centered%20composition%2C%20isolated%20on%20white%20background%2C%20playful%20and%20friendly%20aesthetic%2C%20isometric%20perspective%2C%20high%20detail%20quality%2C%20clean%20and%20modern%20look%2C%20single%20object%20focus&width=80&height=80&seq=9&orientation=squarish" alt="Sports" class="w-full h-full object-cover rounded-full">
+</div>
+<span class="text-xs whitespace-nowrap overflow-hidden text-overflow-ellipsis">Sports</span>
+</div>
+</div>
+<div class="mt-auto">
+<button id="get-started-btn" class="w-full py-3 px-4 gradient-bg text-white font-medium rounded-button shadow-md hover:opacity-90 transition-all cursor-pointer">Get Started</button>
+<p class="text-center mt-4 text-sm text-gray-500">Already have an account? <a href="https://readdy.ai/home/2d8cbb53-b992-497d-a589-6de50818be1b/de8f6a43-ee1a-4a47-98cf-b9f7b61293e3" data-readdy="true" class="text-primary font-medium">Sign in</a></p>
+</div>
+</div>
+</div>
+<!-- Main App Screen (Initially Hidden) -->
+<div id="main-app" class="hidden min-h-screen">
+<!-- Home Screen -->
+<div id="home-screen" class="pb-20 pt-14">
+<!-- Top Navigation -->
+<div class="fixed top-0 left-0 w-full bg-white z-10 shadow-sm">
+<div class="px-5 py-3 flex items-center justify-between">
+<h1 class="font-['Pacifico'] text-xl">Pixlio</h1>
+<div class="flex items-center space-x-3">
+<div id="search-trigger" class="w-8 h-8 flex items-center justify-center cursor-pointer">
+<i class="ri-search-line ri-lg"></i>
+</div>
+<!-- Search Overlay -->
+<div id="search-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+<div class="bg-white w-full h-[90vh] rounded-b-xl transform transition-transform duration-300 -translate-y-full" id="search-content">
+<div class="px-5 py-3 border-b border-gray-100">
+<div class="flex items-center">
+<div class="flex-1 relative">
+<input type="text" id="search-input" class="w-full pl-10 pr-4 py-2 text-sm bg-gray-50 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary" placeholder="Search images...">
+<i class="ri-search-line absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+</div>
+<button id="search-close" class="ml-3 w-8 h-8 flex items-center justify-center text-gray-500">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+</div>
+<div class="px-5 py-4">
+<div class="mb-6">
+<h3 class="text-sm font-medium text-gray-700 mb-3">Recent Searches</h3>
+<div class="space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<i class="ri-history-line text-gray-400 mr-3"></i>
+<span class="text-sm">Nature photography</span>
+</div>
+<i class="ri-close-line text-gray-400"></i>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<i class="ri-history-line text-gray-400 mr-3"></i>
+<span class="text-sm">Modern architecture</span>
+</div>
+<i class="ri-close-line text-gray-400"></i>
+</div>
+</div>
+</div>
+<div>
+<h3 class="text-sm font-medium text-gray-700 mb-3">Trending</h3>
+<div class="grid grid-cols-2 gap-3">
+<div class="relative rounded-lg overflow-hidden aspect-[4/3]">
+<img src="https://readdy.ai/api/search-image?query=Professional%20photograph%20of%20minimalist%20workspace%20setup%20with%20modern%20technology%2C%20clean%20desk%20arrangement%20with%20laptop%20and%20accessories%2C%20soft%20lighting%20on%20light%20background&width=200&height=150&seq=23&orientation=landscape" class="w-full h-full object-cover">
+<div class="absolute inset-0 bg-black bg-opacity-20 flex items-end p-3">
+<span class="text-white text-sm font-medium">Workspace</span>
+</div>
+</div>
+<div class="relative rounded-lg overflow-hidden aspect-[4/3]">
+<img src="https://readdy.ai/api/search-image?query=Professional%20food%20photography%20of%20colorful%20healthy%20breakfast%20bowl%2C%20overhead%20shot%20of%20smoothie%20bowl%20with%20fruits%20and%20granola%2C%20bright%20and%20vibrant%20composition&width=200&height=150&seq=24&orientation=landscape" class="w-full h-full object-cover">
+<div class="absolute inset-0 bg-black bg-opacity-20 flex items-end p-3">
+<span class="text-white text-sm font-medium">Food</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="w-8 h-8 flex items-center justify-center cursor-pointer">
+<i class="ri-notification-3-line ri-lg"></i>
+</div>
+</div>
+</div>
+<!-- Categories Scroll -->
+<div class="overflow-x-auto px-5 py-2 whitespace-nowrap hide-scrollbar border-b border-gray-100">
+<div class="inline-flex space-x-2">
+<button class="px-4 py-1.5 bg-primary text-white text-sm rounded-full cursor-pointer">All</button>
+<button class="px-4 py-1.5 bg-gray-100 text-gray-700 text-sm rounded-full cursor-pointer">Technology</button>
+<button class="px-4 py-1.5 bg-gray-100 text-gray-700 text-sm rounded-full cursor-pointer">Food</button>
+<button class="px-4 py-1.5 bg-gray-100 text-gray-700 text-sm rounded-full cursor-pointer">Fashion</button>
+<button class="px-4 py-1.5 bg-gray-100 text-gray-700 text-sm rounded-full cursor-pointer">Nature</button>
+<button class="px-4 py-1.5 bg-gray-100 text-gray-700 text-sm rounded-full cursor-pointer">Art</button>
+</div>
+</div>
+</div>
+<!-- Image Grid -->
+<div class="px-2 pt-24">
+<div class="masonry-grid">
+<div class="relative rounded-md overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Professional%20high-quality%20photograph%20of%20modern%20technology%20gadgets%20including%20smartphone%2C%20wireless%20earbuds%2C%20and%20smartwatch%20arranged%20in%20a%20clean%20minimalist%20composition%20with%20soft%20lighting%20on%20a%20light%20neutral%20background%2C%20product%20photography%20style%20with%20high%20detail%20and%20clarity%2C%20commercial%20quality%20image%20with%20perfect%20focus&width=180&height=250&seq=10&orientation=portrait" alt="Tech gadgets" class="w-full h-full object-cover">
+<div class="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-white bg-opacity-80 rounded-full cursor-pointer">
+<i class="ri-download-line ri-lg text-primary"></i>
+</div>
+</div>
+<div class="relative rounded-md overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Professional%20high-quality%20photograph%20of%20delicious%20gourmet%20food%20plating%20with%20vibrant%20colors%2C%20artistic%20presentation%20of%20a%20main%20dish%20with%20garnishes%2C%20shot%20from%20above%20on%20a%20stylish%20plate%2C%20restaurant-quality%20food%20photography%20with%20perfect%20lighting%20highlighting%20textures%20and%20details%2C%20commercial%20quality%20image%20with%20shallow%20depth%20of%20field&width=180&height=180&seq=11&orientation=squarish" alt="Gourmet food" class="w-full h-full object-cover">
+<div class="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-white bg-opacity-80 rounded-full cursor-pointer">
+<i class="ri-download-line ri-lg text-primary"></i>
+</div>
+</div>
+<div class="relative rounded-md overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Professional%20high-quality%20fashion%20photography%20of%20stylish%20outfit%20with%20trendy%20accessories%2C%20elegant%20composition%20featuring%20clothing%20items%20and%20jewelry%20arranged%20aesthetically%2C%20commercial%20fashion%20product%20photography%20with%20soft%20lighting%20on%20light%20background%2C%20detailed%20textures%20visible%2C%20professional%20studio%20quality%20with%20perfect%20focus&width=180&height=240&seq=12&orientation=portrait" alt="Fashion items" class="w-full h-full object-cover">
+<div class="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-white bg-opacity-80 rounded-full cursor-pointer">
+<i class="ri-download-line ri-lg text-primary"></i>
+</div>
+</div>
+<div class="relative rounded-md overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Professional%20high-quality%20photograph%20of%20modern%20architecture%20with%20geometric%20shapes%20and%20glass%20facades%2C%20contemporary%20building%20exterior%20with%20interesting%20angles%20and%20lines%2C%20architectural%20photography%20with%20perfect%20lighting%20showing%20structural%20details%2C%20commercial%20quality%20image%20with%20excellent%20composition%20and%20perspective&width=180&height=180&seq=13&orientation=squarish" alt="Modern architecture" class="w-full h-full object-cover">
+<div class="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-white bg-opacity-80 rounded-full cursor-pointer">
+<i class="ri-download-line ri-lg text-primary"></i>
+</div>
+</div>
+<div class="relative rounded-md overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Professional%20high-quality%20photograph%20of%20natural%20landscape%20with%20mountains%20and%20forest%2C%20scenic%20outdoor%20nature%20photography%20with%20dramatic%20lighting%2C%20beautiful%20wilderness%20scene%20with%20perfect%20composition%20showing%20depth%20and%20scale%2C%20commercial%20quality%20travel%20photography%20with%20vibrant%20colors%20and%20sharp%20details&width=180&height=250&seq=14&orientation=portrait" alt="Nature landscape" class="w-full h-full object-cover">
+<div class="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-white bg-opacity-80 rounded-full cursor-pointer">
+<i class="ri-download-line ri-lg text-primary"></i>
+</div>
+</div>
+<div class="relative rounded-md overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Professional%20high-quality%20photograph%20of%20artistic%20abstract%20painting%20or%20artwork%2C%20close-up%20detail%20of%20colorful%20art%20piece%20showing%20texture%20and%20brushstrokes%2C%20gallery-quality%20art%20photography%20with%20perfect%20lighting%20highlighting%20artistic%20elements%2C%20commercial%20quality%20image%20with%20excellent%20color%20reproduction&width=180&height=180&seq=15&orientation=squarish" alt="Abstract art" class="w-full h-full object-cover">
+<div class="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-white bg-opacity-80 rounded-full cursor-pointer">
+<i class="ri-download-line ri-lg text-primary"></i>
+</div>
+</div>
+<div class="relative rounded-md overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Professional%20high-quality%20photograph%20of%20sleek%20modern%20laptop%20with%20clean%20workspace%20setup%2C%20minimalist%20tech%20desk%20arrangement%20with%20accessories%2C%20product%20photography%20style%20with%20soft%20lighting%20on%20light%20background%2C%20commercial%20quality%20image%20with%20perfect%20focus%20showing%20details%20of%20technology&width=180&height=180&seq=16&orientation=squarish" alt="Workspace setup" class="w-full h-full object-cover">
+<div class="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-white bg-opacity-80 rounded-full cursor-pointer">
+<i class="ri-download-line ri-lg text-primary"></i>
+</div>
+</div>
+<div class="relative rounded-md overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Professional%20high-quality%20photograph%20of%20elegant%20cocktail%20or%20beverage%20with%20garnish%2C%20beautifully%20styled%20drink%20photography%20with%20perfect%20lighting%20highlighting%20glass%20details%20and%20liquid%2C%20commercial%20food%20photography%20with%20shallow%20depth%20of%20field%2C%20perfect%20composition%20on%20stylish%20background&width=180&height=250&seq=17&orientation=portrait" alt="Elegant cocktail" class="w-full h-full object-cover">
+<div class="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-white bg-opacity-80 rounded-full cursor-pointer">
+<i class="ri-download-line ri-lg text-primary"></i>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Downloads Screen (Initially Hidden) -->
+<div id="downloads-screen" class="hidden pb-20 pt-14">
+<!-- Top Navigation -->
+<div class="fixed top-0 left-0 w-full bg-white z-10 shadow-sm">
+<div class="px-5 py-3 flex items-center justify-between">
+<h1 class="font-medium text-lg">Downloads</h1>
+<div class="flex items-center space-x-3">
+<div id="search-trigger" class="w-8 h-8 flex items-center justify-center cursor-pointer">
+<i class="ri-search-line ri-lg"></i>
+</div>
+<!-- Search Overlay -->
+<div id="search-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+<div class="bg-white w-full h-[90vh] rounded-b-xl transform transition-transform duration-300 -translate-y-full" id="search-content">
+<div class="px-5 py-3 border-b border-gray-100">
+<div class="flex items-center">
+<div class="flex-1 relative">
+<input type="text" id="search-input" class="w-full pl-10 pr-4 py-2 text-sm bg-gray-50 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary" placeholder="Search images...">
+<i class="ri-search-line absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+</div>
+<button id="search-close" class="ml-3 w-8 h-8 flex items-center justify-center text-gray-500">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+</div>
+<div class="px-5 py-4">
+<div class="mb-6">
+<h3 class="text-sm font-medium text-gray-700 mb-3">Recent Searches</h3>
+<div class="space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<i class="ri-history-line text-gray-400 mr-3"></i>
+<span class="text-sm">Nature photography</span>
+</div>
+<i class="ri-close-line text-gray-400"></i>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<i class="ri-history-line text-gray-400 mr-3"></i>
+<span class="text-sm">Modern architecture</span>
+</div>
+<i class="ri-close-line text-gray-400"></i>
+</div>
+</div>
+</div>
+<div>
+<h3 class="text-sm font-medium text-gray-700 mb-3">Trending</h3>
+<div class="grid grid-cols-2 gap-3">
+<div class="relative rounded-lg overflow-hidden aspect-[4/3]">
+<img src="https://readdy.ai/api/search-image?query=Professional%20photograph%20of%20minimalist%20workspace%20setup%20with%20modern%20technology%2C%20clean%20desk%20arrangement%20with%20laptop%20and%20accessories%2C%20soft%20lighting%20on%20light%20background&width=200&height=150&seq=23&orientation=landscape" class="w-full h-full object-cover">
+<div class="absolute inset-0 bg-black bg-opacity-20 flex items-end p-3">
+<span class="text-white text-sm font-medium">Workspace</span>
+</div>
+</div>
+<div class="relative rounded-lg overflow-hidden aspect-[4/3]">
+<img src="https://readdy.ai/api/search-image?query=Professional%20food%20photography%20of%20colorful%20healthy%20breakfast%20bowl%2C%20overhead%20shot%20of%20smoothie%20bowl%20with%20fruits%20and%20granola%2C%20bright%20and%20vibrant%20composition&width=200&height=150&seq=24&orientation=landscape" class="w-full h-full object-cover">
+<div class="absolute inset-0 bg-black bg-opacity-20 flex items-end p-3">
+<span class="text-white text-sm font-medium">Food</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="w-8 h-8 flex items-center justify-center cursor-pointer">
+<i class="ri-more-2-fill ri-lg"></i>
+</div>
+</div>
+</div>
+</div>
+<!-- Downloads Content -->
+<div class="px-5 pt-16">
+<div class="grid grid-cols-2 gap-3">
+<div class="relative rounded-md overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Professional%20high-quality%20photograph%20of%20modern%20technology%20gadgets%20including%20smartphone%2C%20wireless%20earbuds%2C%20and%20smartwatch%20arranged%20in%20a%20clean%20minimalist%20composition%20with%20soft%20lighting%20on%20a%20light%20neutral%20background%2C%20product%20photography%20style%20with%20high%20detail%20and%20clarity%2C%20commercial%20quality%20image%20with%20perfect%20focus&width=180&height=180&seq=18&orientation=squarish" alt="Tech gadgets" class="w-full h-full object-cover">
+<div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 px-2 py-1.5">
+<p class="text-white text-xs">Apr 18, 2025</p>
+</div>
+</div>
+<div class="relative rounded-md overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Professional%20high-quality%20fashion%20photography%20of%20stylish%20outfit%20with%20trendy%20accessories%2C%20elegant%20composition%20featuring%20clothing%20items%20and%20jewelry%20arranged%20aesthetically%2C%20commercial%20fashion%20product%20photography%20with%20soft%20lighting%20on%20light%20background%2C%20detailed%20textures%20visible%2C%20professional%20studio%20quality%20with%20perfect%20focus&width=180&height=180&seq=19&orientation=squarish" alt="Fashion items" class="w-full h-full object-cover">
+<div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 px-2 py-1.5">
+<p class="text-white text-xs">Apr 17, 2025</p>
+</div>
+</div>
+<div class="relative rounded-md overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Professional%20high-quality%20photograph%20of%20natural%20landscape%20with%20mountains%20and%20forest%2C%20scenic%20outdoor%20nature%20photography%20with%20dramatic%20lighting%2C%20beautiful%20wilderness%20scene%20with%20perfect%20composition%20showing%20depth%20and%20scale%2C%20commercial%20quality%20travel%20photography%20with%20vibrant%20colors%20and%20sharp%20details&width=180&height=180&seq=20&orientation=squarish" alt="Nature landscape" class="w-full h-full object-cover">
+<div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 px-2 py-1.5">
+<p class="text-white text-xs">Apr 15, 2025</p>
+</div>
+</div>
+</div>
+<!-- Empty State (Initially Hidden) -->
+<div id="empty-downloads" class="hidden flex flex-col items-center justify-center py-16">
+<div class="w-32 h-32 flex items-center justify-center mb-4">
+<img src="https://readdy.ai/api/search-image?query=3D%20illustration%20of%20empty%20folder%20or%20download%20icon%2C%20minimalist%20design%20with%20soft%20shadows%2C%20clean%20and%20modern%20style%20with%20blue%20and%20purple%20color%20scheme%2C%20centered%20composition%20on%20white%20background%2C%20simple%20yet%20professional%20look%2C%20isometric%20perspective&width=200&height=200&seq=21&orientation=squarish" alt="Empty downloads" class="w-full h-full object-contain">
+</div>
+<h3 class="text-lg font-medium mb-1">No downloads yet</h3>
+<p class="text-gray-500 text-sm text-center max-w-xs">Tap the download icon on any image to save it to your collection</p>
+<button class="mt-6 px-6 py-2 gradient-bg text-white rounded-button cursor-pointer">Explore Images</button>
+</div>
+</div>
+</div>
+<!-- Profile Screen (Initially Hidden) -->
+<div id="profile-screen" class="hidden pb-20 pt-14">
+<!-- Top Navigation -->
+<div class="fixed top-0 left-0 w-full bg-white z-10 shadow-sm">
+<div class="px-5 py-3 flex items-center justify-between">
+<h1 class="font-medium text-lg">Profile</h1>
+<div id="settings-trigger" class="w-8 h-8 flex items-center justify-center cursor-pointer">
+<i class="ri-settings-3-line ri-lg"></i>
+</div>
+<!-- Settings Modal -->
+<div id="settings-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+<div id="settings-content" class="absolute bottom-0 left-0 right-0 bg-white rounded-t-xl transform translate-y-full transition-transform duration-300">
+<div class="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
+<h2 class="text-lg font-medium">Settings</h2>
+<button id="settings-close" class="w-8 h-8 flex items-center justify-center text-gray-500">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<div class="px-5 py-4 space-y-4 max-h-[80vh] overflow-y-auto">
+<!-- Language -->
+<div class="flex items-center justify-between p-3 bg-gray-50 rounded-md cursor-pointer">
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center mr-3 text-primary">
+<i class="ri-global-line ri-lg"></i>
+</div>
+<div>
+<span class="text-sm font-medium">Language</span>
+<p class="text-xs text-gray-500 mt-0.5">English (US)</p>
+</div>
+</div>
+<i class="ri-arrow-right-s-line ri-lg text-gray-400"></i>
+</div>
+<!-- Theme -->
+<div class="flex items-center justify-between p-3 bg-gray-50 rounded-md cursor-pointer">
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center mr-3 text-primary">
+<i class="ri-contrast-2-line ri-lg"></i>
+</div>
+<div>
+<span class="text-sm font-medium">Theme</span>
+<p class="text-xs text-gray-500 mt-0.5">Light Mode</p>
+</div>
+</div>
+<i class="ri-arrow-right-s-line ri-lg text-gray-400"></i>
+</div>
+<!-- Data Usage -->
+<div class="flex items-center justify-between p-3 bg-gray-50 rounded-md cursor-pointer">
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center mr-3 text-primary">
+<i class="ri-database-2-line ri-lg"></i>
+</div>
+<div>
+<span class="text-sm font-medium">Data Usage</span>
+<p class="text-xs text-gray-500 mt-0.5">Manage data settings</p>
+</div>
+</div>
+<i class="ri-arrow-right-s-line ri-lg text-gray-400"></i>
+</div>
+<!-- Account Security -->
+<div class="flex items-center justify-between p-3 bg-gray-50 rounded-md cursor-pointer">
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center mr-3 text-primary">
+<i class="ri-shield-keyhole-line ri-lg"></i>
+</div>
+<div>
+<span class="text-sm font-medium">Account Security</span>
+<p class="text-xs text-gray-500 mt-0.5">Password, 2FA, login history</p>
+</div>
+</div>
+<i class="ri-arrow-right-s-line ri-lg text-gray-400"></i>
+</div>
+<!-- Help & Support -->
+<div class="flex items-center justify-between p-3 bg-gray-50 rounded-md cursor-pointer">
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center mr-3 text-primary">
+<i class="ri-question-line ri-lg"></i>
+</div>
+<div>
+<span class="text-sm font-medium">Help & Support</span>
+<p class="text-xs text-gray-500 mt-0.5">FAQs, contact support</p>
+</div>
+</div>
+<i class="ri-arrow-right-s-line ri-lg text-gray-400"></i>
+</div>
+<!-- About -->
+<div class="flex items-center justify-between p-3 bg-gray-50 rounded-md cursor-pointer">
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center mr-3 text-primary">
+<i class="ri-information-line ri-lg"></i>
+</div>
+<div>
+<span class="text-sm font-medium">About Pixlio</span>
+<p class="text-xs text-gray-500 mt-0.5">Version 1.0.0</p>
+</div>
+</div>
+<i class="ri-arrow-right-s-line ri-lg text-gray-400"></i>
+</div>
+<!-- Terms & Privacy -->
+<div class="flex items-center justify-between p-3 bg-gray-50 rounded-md cursor-pointer">
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center mr-3 text-primary">
+<i class="ri-file-text-line ri-lg"></i>
+</div>
+<div>
+<span class="text-sm font-medium">Terms & Privacy Policy</span>
+<p class="text-xs text-gray-500 mt-0.5">Legal information</p>
+</div>
+</div>
+<i class="ri-arrow-right-s-line ri-lg text-gray-400"></i>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Profile Content -->
+<div class="px-5 pt-16">
+<!-- User Info -->
+<div class="flex flex-col items-center mb-8">
+<div class="w-20 h-20 rounded-full overflow-hidden mb-3 border-2 border-primary">
+<img src="https://readdy.ai/api/search-image?query=Professional%20portrait%20photograph%20of%20young%20adult%20with%20friendly%20expression%2C%20clean%20headshot%20with%20soft%20lighting%20against%20neutral%20background%2C%20professional%20quality%20with%20perfect%20focus%20on%20face%2C%20contemporary%20style%20portrait%20showing%20shoulders%20and%20above&width=200&height=200&seq=22&orientation=squarish" alt="Profile" class="w-full h-full object-cover">
+</div>
+<h2 class="font-medium text-lg">Emily Johnson</h2>
+<p class="text-gray-500 text-sm">emily.johnson@example.com</p>
+<button id="edit-profile-btn" class="mt-3 px-4 py-1.5 border border-gray-300 text-sm rounded-button cursor-pointer">Edit Profile</button>
+<!-- Edit Profile Modal -->
+<div id="edit-profile-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+<div id="edit-profile-content" class="absolute bottom-0 left-0 right-0 bg-white rounded-t-xl transform translate-y-full transition-transform duration-300">
+<div class="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
+<h2 class="text-lg font-medium">Edit Profile</h2>
+<button id="edit-profile-close" class="w-8 h-8 flex items-center justify-center text-gray-500">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<form id="edit-profile-form" class="px-5 py-4 space-y-4">
+<div class="flex flex-col items-center mb-6">
+<div class="relative">
+<div class="w-20 h-20 rounded-full overflow-hidden border-2 border-primary">
+<img id="profile-preview" src="https://readdy.ai/api/search-image?query=Professional%20portrait%20photograph%20of%20young%20adult%20with%20friendly%20expression%2C%20clean%20headshot%20with%20soft%20lighting%20against%20neutral%20background%2C%20professional%20quality%20with%20perfect%20focus%20on%20face%2C%20contemporary%20style%20portrait%20showing%20shoulders%20and%20above&width=200&height=200&seq=22&orientation=squarish" alt="Profile" class="w-full h-full object-cover">
+</div>
+<label for="profile-upload" class="absolute bottom-0 right-0 w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center cursor-pointer">
+<i class="ri-camera-line"></i>
+</label>
+<input type="file" id="profile-upload" class="hidden" accept="image/*">
+</div>
+</div>
+<div class="space-y-2">
+<label for="profile-name" class="text-sm font-medium text-gray-700">Name</label>
+<input type="text" id="profile-name" class="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-primary" value="Emily Johnson" required>
+</div>
+<div class="space-y-2">
+<label for="profile-email" class="text-sm font-medium text-gray-700">Email</label>
+<input type="email" id="profile-email" class="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-primary" value="emily.johnson@example.com" required>
+</div>
+</form>
+<div class="px-5 py-4 border-t border-gray-100 flex space-x-3">
+<button id="edit-profile-cancel" class="flex-1 py-2 border border-gray-200 text-gray-700 font-medium rounded-button">Cancel</button>
+<button id="edit-profile-save" class="flex-1 py-2 bg-primary text-white font-medium rounded-button">Save Changes</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Stats -->
+<div class="grid grid-cols-3 gap-2 mb-8">
+<div class="flex flex-col items-center p-3 bg-gray-50 rounded-md">
+<span class="font-semibold text-lg">47</span>
+<span class="text-gray-500 text-xs">Downloads</span>
+</div>
+<div class="flex flex-col items-center p-3 bg-gray-50 rounded-md">
+<span class="font-semibold text-lg">3</span>
+<span class="text-gray-500 text-xs">Categories</span>
+</div>
+<div class="flex flex-col items-center p-3 bg-gray-50 rounded-md">
+<span class="font-semibold text-lg">12</span>
+<span class="text-gray-500 text-xs">Days</span>
+</div>
+</div>
+<!-- Preferences -->
+<div class="mb-6">
+<h3 class="font-medium text-base mb-3">Your Interests</h3>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-primary bg-opacity-10 text-primary text-xs rounded-full">Technology</span>
+<span class="px-3 py-1 bg-primary bg-opacity-10 text-primary text-xs rounded-full">Food</span>
+<span class="px-3 py-1 bg-primary bg-opacity-10 text-primary text-xs rounded-full">Fashion</span>
+<span class="px-3 py-1 border border-gray-300 text-gray-500 text-xs rounded-full cursor-pointer">+ Add More</span>
+</div>
+</div>
+<!-- Settings -->
+<div>
+<h3 class="font-medium text-base mb-3">Settings</h3>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-3 bg-gray-50 rounded-md">
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center mr-3 text-primary">
+<i class="ri-notification-line ri-lg"></i>
+</div>
+<span class="text-sm">Notifications</span>
+</div>
+<div class="relative inline-block w-10 h-6 cursor-pointer">
+<input type="checkbox" id="toggle-notifications" class="opacity-0 w-0 h-0">
+<span class="absolute top-0 left-0 right-0 bottom-0 bg-primary rounded-full transition-all before:absolute before:content-[''] before:h-4 before:w-4 before:left-1 before:bottom-1 before:bg-white before:rounded-full before:transition-all checked:before:translate-x-4"></span>
+</div>
+</div>
+<div class="flex items-center justify-between p-3 bg-gray-50 rounded-md">
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center mr-3 text-primary">
+<i class="ri-download-cloud-line ri-lg"></i>
+</div>
+<span class="text-sm">Auto-save to Gallery</span>
+</div>
+<div class="relative inline-block w-10 h-6 cursor-pointer">
+<input type="checkbox" id="toggle-autosave" class="opacity-0 w-0 h-0" checked>
+<span class="absolute top-0 left-0 right-0 bottom-0 bg-primary rounded-full transition-all before:absolute before:content-[''] before:h-4 before:w-4 before:left-1 before:bottom-1 before:bg-white before:rounded-full before:transition-all checked:before:translate-x-4"></span>
+</div>
+</div>
+<div class="flex items-center justify-between p-3 bg-gray-50 rounded-md cursor-pointer">
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center mr-3 text-primary">
+<i class="ri-shield-line ri-lg"></i>
+</div>
+<span class="text-sm">Privacy Settings</span>
+</div>
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-arrow-right-s-line ri-lg text-gray-400"></i>
+</div>
+</div>
+<div class="flex items-center justify-between p-3 bg-gray-50 rounded-md cursor-pointer">
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center mr-3 text-red-500">
+<i class="ri-logout-box-line ri-lg"></i>
+</div>
+<span class="text-sm text-red-500">Log Out</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation -->
+<div class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 z-10">
+<div class="grid grid-cols-3 h-16">
+<div id="nav-home" class="flex flex-col items-center justify-center cursor-pointer">
+<div class="w-6 h-6 flex items-center justify-center text-primary">
+<i class="ri-home-5-fill ri-lg"></i>
+</div>
+<span class="text-xs mt-1 text-primary">Home</span>
+</div>
+<div id="nav-downloads" class="flex flex-col items-center justify-center cursor-pointer">
+<div class="w-6 h-6 flex items-center justify-center text-gray-500">
+<i class="ri-download-line ri-lg"></i>
+</div>
+<span class="text-xs mt-1 text-gray-500">Downloads</span>
+</div>
+<div id="nav-profile" class="flex flex-col items-center justify-center cursor-pointer">
+<div class="w-6 h-6 flex items-center justify-center text-gray-500">
+<i class="ri-user-line ri-lg"></i>
+</div>
+<span class="text-xs mt-1 text-gray-500">Profile</span>
+</div>
+</div>
+</div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+// Get Started button click
+const getStartedBtn = document.getElementById('get-started-btn');
+getStartedBtn.addEventListener('click', function() {
+document.getElementById('onboarding-screen').classList.add('hidden');
+document.getElementById('main-app').classList.remove('hidden');
+});
+// Category selection
+const categoryItems = document.querySelectorAll('.category-item');
+categoryItems.forEach(item => {
+item.addEventListener('click', function() {
+this.classList.toggle('active');
+});
+});
+});
+document.addEventListener('DOMContentLoaded', function() {
+// Bottom navigation
+const navHome = document.getElementById('nav-home');
+const navDownloads = document.getElementById('nav-downloads');
+const navProfile = document.getElementById('nav-profile');
+const homeScreen = document.getElementById('home-screen');
+const downloadsScreen = document.getElementById('downloads-screen');
+const profileScreen = document.getElementById('profile-screen');
+navHome.addEventListener('click', function() {
+// Update screens
+homeScreen.classList.remove('hidden');
+downloadsScreen.classList.add('hidden');
+profileScreen.classList.add('hidden');
+// Update navigation
+navHome.querySelector('div').classList.add('text-primary');
+navHome.querySelector('span').classList.add('text-primary');
+navHome.querySelector('i').classList.remove('ri-home-line');
+navHome.querySelector('i').classList.add('ri-home-5-fill');
+navDownloads.querySelector('div').classList.remove('text-primary');
+navDownloads.querySelector('span').classList.remove('text-primary');
+navDownloads.querySelector('i').classList.remove('ri-download-fill');
+navDownloads.querySelector('i').classList.add('ri-download-line');
+navProfile.querySelector('div').classList.remove('text-primary');
+navProfile.querySelector('span').classList.remove('text-primary');
+navProfile.querySelector('i').classList.remove('ri-user-fill');
+navProfile.querySelector('i').classList.add('ri-user-line');
+});
+navDownloads.addEventListener('click', function() {
+// Update screens
+homeScreen.classList.add('hidden');
+downloadsScreen.classList.remove('hidden');
+profileScreen.classList.add('hidden');
+// Update navigation
+navHome.querySelector('div').classList.remove('text-primary');
+navHome.querySelector('span').classList.remove('text-primary');
+navHome.querySelector('i').classList.remove('ri-home-5-fill');
+navHome.querySelector('i').classList.add('ri-home-line');
+navDownloads.querySelector('div').classList.add('text-primary');
+navDownloads.querySelector('span').classList.add('text-primary');
+navDownloads.querySelector('i').classList.remove('ri-download-line');
+navDownloads.querySelector('i').classList.add('ri-download-fill');
+navProfile.querySelector('div').classList.remove('text-primary');
+navProfile.querySelector('span').classList.remove('text-primary');
+navProfile.querySelector('i').classList.remove('ri-user-fill');
+navProfile.querySelector('i').classList.add('ri-user-line');
+});
+navProfile.addEventListener('click', function() {
+// Update screens
+homeScreen.classList.add('hidden');
+downloadsScreen.classList.add('hidden');
+profileScreen.classList.remove('hidden');
+// Update navigation
+navHome.querySelector('div').classList.remove('text-primary');
+navHome.querySelector('span').classList.remove('text-primary');
+navHome.querySelector('i').classList.remove('ri-home-5-fill');
+navHome.querySelector('i').classList.add('ri-home-line');
+navDownloads.querySelector('div').classList.remove('text-primary');
+navDownloads.querySelector('span').classList.remove('text-primary');
+navDownloads.querySelector('i').classList.remove('ri-download-fill');
+navDownloads.querySelector('i').classList.add('ri-download-line');
+navProfile.querySelector('div').classList.add('text-primary');
+navProfile.querySelector('span').classList.add('text-primary');
+navProfile.querySelector('i').classList.remove('ri-user-line');
+navProfile.querySelector('i').classList.add('ri-user-fill');
+});
+});
+document.addEventListener('DOMContentLoaded', function() {
+// Edit Profile modal functionality
+const editProfileBtn = document.getElementById('edit-profile-btn');
+const editProfileModal = document.getElementById('edit-profile-modal');
+const editProfileContent = document.getElementById('edit-profile-content');
+const editProfileClose = document.getElementById('edit-profile-close');
+const editProfileCancel = document.getElementById('edit-profile-cancel');
+const editProfileSave = document.getElementById('edit-profile-save');
+const editProfileForm = document.getElementById('edit-profile-form');
+const profileUpload = document.getElementById('profile-upload');
+const profilePreview = document.getElementById('profile-preview');
+const openEditProfileModal = () => {
+editProfileModal.classList.remove('hidden');
+setTimeout(() => {
+editProfileContent.classList.remove('translate-y-full');
+}, 50);
+};
+const closeEditProfileModal = () => {
+editProfileContent.classList.add('translate-y-full');
+setTimeout(() => {
+editProfileModal.classList.add('hidden');
+}, 300);
+};
+editProfileBtn.addEventListener('click', openEditProfileModal);
+editProfileClose.addEventListener('click', closeEditProfileModal);
+editProfileCancel.addEventListener('click', closeEditProfileModal);
+editProfileModal.addEventListener('click', (e) => {
+if (e.target === editProfileModal) {
+closeEditProfileModal();
+}
+});
+profileUpload.addEventListener('change', (e) => {
+const file = e.target.files[0];
+if (file) {
+if (file.type.startsWith('image/')) {
+const reader = new FileReader();
+reader.onload = (e) => {
+profilePreview.src = e.target.result;
+};
+reader.readAsDataURL(file);
+} else {
+const errorModal = document.createElement('div');
+errorModal.className = 'fixed inset-0 flex items-center justify-center z-50';
+errorModal.innerHTML = `
+<div class="bg-white rounded-lg p-6 shadow-xl max-w-sm mx-4">
+<h3 class="text-lg font-medium mb-2">Invalid File Type</h3>
+<p class="text-gray-600 mb-4">Please select an image file.</p>
+<button class="w-full py-2 bg-primary text-white rounded-button">OK</button>
+</div>
+`;
+document.body.appendChild(errorModal);
+errorModal.querySelector('button').onclick = () => errorModal.remove();
+}
+}
+});
+editProfileSave.addEventListener('click', () => {
+const nameInput = document.getElementById('profile-name');
+const emailInput = document.getElementById('profile-email');
+if (!nameInput.value.trim() || !emailInput.value.trim()) {
+const errorModal = document.createElement('div');
+errorModal.className = 'fixed inset-0 flex items-center justify-center z-50';
+errorModal.innerHTML = `
+<div class="bg-white rounded-lg p-6 shadow-xl max-w-sm mx-4">
+<h3 class="text-lg font-medium mb-2">Invalid Input</h3>
+<p class="text-gray-600 mb-4">Please fill in all required fields.</p>
+<button class="w-full py-2 bg-primary text-white rounded-button">OK</button>
+</div>
+`;
+document.body.appendChild(errorModal);
+errorModal.querySelector('button').onclick = () => errorModal.remove();
+return;
+}
+if (!emailInput.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+const errorModal = document.createElement('div');
+errorModal.className = 'fixed inset-0 flex items-center justify-center z-50';
+errorModal.innerHTML = `
+<div class="bg-white rounded-lg p-6 shadow-xl max-w-sm mx-4">
+<h3 class="text-lg font-medium mb-2">Invalid Email</h3>
+<p class="text-gray-600 mb-4">Please enter a valid email address.</p>
+<button class="w-full py-2 bg-primary text-white rounded-button">OK</button>
+</div>
+`;
+document.body.appendChild(errorModal);
+errorModal.querySelector('button').onclick = () => errorModal.remove();
+return;
+}
+// Success modal
+const successModal = document.createElement('div');
+successModal.className = 'fixed inset-0 flex items-center justify-center z-50';
+successModal.innerHTML = `
+<div class="bg-white rounded-lg p-6 shadow-xl max-w-sm mx-4">
+<div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
+<i class="ri-check-line ri-2x text-green-500"></i>
+</div>
+<h3 class="text-lg font-medium text-center mb-2">Profile Updated</h3>
+<p class="text-gray-600 text-center mb-4">Your profile has been successfully updated.</p>
+<button class="w-full py-2 bg-primary text-white rounded-button">OK</button>
+</div>
+`;
+document.body.appendChild(successModal);
+successModal.querySelector('button').onclick = () => {
+successModal.remove();
+closeEditProfileModal();
+};
+});
+// Settings modal functionality
+const settingsTrigger = document.getElementById('settings-trigger');
+const settingsModal = document.getElementById('settings-modal');
+const settingsContent = document.getElementById('settings-content');
+const settingsClose = document.getElementById('settings-close');
+settingsTrigger.addEventListener('click', () => {
+settingsModal.classList.remove('hidden');
+setTimeout(() => {
+settingsContent.classList.remove('translate-y-full');
+}, 50);
+});
+settingsClose.addEventListener('click', () => {
+settingsContent.classList.add('translate-y-full');
+setTimeout(() => {
+settingsModal.classList.add('hidden');
+}, 300);
+});
+settingsModal.addEventListener('click', (e) => {
+if (e.target === settingsModal) {
+settingsContent.classList.add('translate-y-full');
+setTimeout(() => {
+settingsModal.classList.add('hidden');
+}, 300);
+}
+});
+// Search overlay functionality
+const searchTrigger = document.getElementById('search-trigger');
+const searchOverlay = document.getElementById('search-overlay');
+const searchContent = document.getElementById('search-content');
+const searchClose = document.getElementById('search-close');
+const searchInput = document.getElementById('search-input');
+searchTrigger.addEventListener('click', () => {
+searchOverlay.classList.remove('hidden');
+setTimeout(() => {
+searchContent.classList.remove('-translate-y-full');
+searchInput.focus();
+}, 50);
+});
+searchClose.addEventListener('click', () => {
+searchContent.classList.add('-translate-y-full');
+setTimeout(() => {
+searchOverlay.classList.add('hidden');
+}, 300);
+});
+searchOverlay.addEventListener('click', (e) => {
+if (e.target === searchOverlay) {
+searchContent.classList.add('-translate-y-full');
+setTimeout(() => {
+searchOverlay.classList.add('hidden');
+}, 300);
+}
+});
+// Real-time search suggestions
+let searchTimeout;
+searchInput.addEventListener('input', (e) => {
+clearTimeout(searchTimeout);
+searchTimeout = setTimeout(() => {
+// Here you would typically make an API call for search suggestions
+console.log('Searching for:', e.target.value);
+}, 300);
+});
+// Toggle switches
+const toggleNotifications = document.getElementById('toggle-notifications');
+const toggleAutosave = document.getElementById('toggle-autosave');
+function showToast(message) {
+  const existingToast = document.querySelector('.toast-notification');
+  if (existingToast) {
+    existingToast.remove();
+  }
+
+  const toast = document.createElement('div');
+  toast.className = 'toast-notification fixed bottom-20 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-4 py-2 rounded-lg text-sm z-50 transition-opacity duration-300 opacity-0';
+  toast.textContent = message;
+  document.body.appendChild(toast);
+
+  setTimeout(() => {
+    toast.classList.remove('opacity-0');
+  }, 100);
+
+  setTimeout(() => {
+    toast.classList.add('opacity-0');
+    setTimeout(() => {
+      toast.remove();
+    }, 300);
+  }, 2000);
+}
+
+toggleNotifications.addEventListener('change', function() {
+  const toggleSpan = this.nextElementSibling;
+  if (this.checked) {
+    toggleSpan.classList.remove('bg-gray-300');
+    toggleSpan.classList.add('bg-primary');
+    showToast('Notifications turned on');
+  } else {
+    toggleSpan.classList.remove('bg-primary');
+    toggleSpan.classList.add('bg-gray-300');
+    showToast('Notifications turned off');
+  }
+});
+
+toggleAutosave.addEventListener('change', function() {
+  const toggleSpan = this.nextElementSibling;
+  if (this.checked) {
+    toggleSpan.classList.remove('bg-gray-300');
+    toggleSpan.classList.add('bg-primary');
+    showToast('Auto-save to Gallery turned on');
+  } else {
+    toggleSpan.classList.remove('bg-primary');
+    toggleSpan.classList.add('bg-gray-300');
+    showToast('Auto-save to Gallery turned off');
+  }
+});
+});
+</script>
+</body>
+</html>
